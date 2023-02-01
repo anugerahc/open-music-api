@@ -5,25 +5,25 @@
 
 > Clone Repository
 ``` bash
-$ git clone https://github.com/MEY-Mental-Education-Yes/MEY-APP-BACKEND.git
+ git clone https://github.com/MEY-Mental-Education-Yes/MEY-APP-BACKEND.git
 ```
 >Go to Directory
 ``` bash
-$ cd open-music-api
+ cd open-music-api
 ```
 >Install Dependencies
 ``` bash
-$ npm install
+ npm install
 ```
 >Migrate Database using Node PG Migrate
 ``` bash
-$ npm run migrate up
+ npm run migrate up
 ```
 >Migrate Database using Node PG Migrate
 ``` bash
-$ npm run migrate up
+ npm run migrate up
 ```
 >Run Server
 ``` bash
-$ npm run start
+ npm run start
 ```
