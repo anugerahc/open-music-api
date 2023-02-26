@@ -2,7 +2,7 @@
 
 ## Dicoding Submission Class Belajar Fundamental Aplikasi Back-End
 
-Submission v1
+Submission v2
 
 ### How To Use
 
