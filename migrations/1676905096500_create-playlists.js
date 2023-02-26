@@ -1,33 +1,18 @@
 /* eslint-disable camelcase */
 
 exports.up = (pgm) => {
-    pgm.createTable('songs', {
+    pgm.createTable('playlists', {
         id: {
             type: 'varchar(30)',
             primaryKey: true,
         },
-        title: {
+        name: {
             type: 'varchar(50)',
             notNull: true,
         },
-        year: {
-            type: 'integer',
-            notNull: true,
-        },
-        performer: {
-            type: 'varchar(50)',
-            notNull: true,
-        },
-        genre: {
-            type: 'varchar(50)',
-            notNull: true,
-        },
-        duration: {
-            type: 'integer',
-        },
-        album_id: {
+        owner: {
             type: 'varchar(30)',
-            references: '"albums"',
+            references: '"users"',
             onDelete: 'cascade',
             onUpdate: 'cascade',
         },
@@ -43,5 +28,5 @@ exports.up = (pgm) => {
 };
 
 exports.down = (pgm) => {
-    pgm.dropTable('songs');
+    pgm.dropTable('playlists');
 };
