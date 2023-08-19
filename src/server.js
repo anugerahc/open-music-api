@@ -1,12 +1,25 @@
 require('dotenv').config();
+const config = require('./utils/config.js');
 
 const Hapi = require('@hapi/hapi');
 const Jwt = require('@hapi/jwt');
+
 
 // Albums
 const albums = require('./api/albums');
 const AlbumService = require('./services/albums/AlbumService');
 const {AlbumValidator} = require('./validator/albums');
+
+// Storage
+const StorageService = require('./services/storages/StorageService');
+
+// Cache
+const CacheService = require('./services/cache/CacheService');
+
+// Exports Plugin
+const _exports = require('./api/exports');
+const ProducerService = require('./services/exports/ProducerService');
+const {ExportPlaylistValidator} = require('./validator/exports');
 
 // Songs
 const songs = require('./api/songs');
@@ -41,7 +54,8 @@ const {CollaborationValidator} = require('./validator/collaborations');
 const ClientError = require('./exceptions/ClientError');
 
 const init = async () => {
-    const albumService = new AlbumService();
+    const cacheService = new CacheService();
+    const albumService = new AlbumService(cacheService);
     const albumValidator = new AlbumValidator();
     const songService = new SongService();
     const songValidator = new SongValidator();
@@ -54,10 +68,11 @@ const init = async () => {
     const playlistValidator = new PlaylistValidator();
     const authenticationService = new AuthenticationService();
     const authenticationValidator = new AuthenticationValidator();
+    const albumStorageService = new StorageService();
 
     const server = Hapi.server({
-        host: process.env.HOST,
-        port: process.env.PORT,
+        host: config.app.host,
+        port: config.app.port,
         routes: {
             cors: {
                 origin: ['*'],
@@ -91,7 +106,8 @@ const init = async () => {
         {
             plugin: albums,
             options: {
-                service: albumService,
+                albumService,
+                storageService: albumStorageService,
                 validator: albumValidator,
             }, 
         },
@@ -133,6 +149,14 @@ const init = async () => {
               validator: collaborationValidator,
             },
         },
+        {
+            plugin: _exports,
+            options: {
+              exportService: ProducerService,
+              playlistService,
+              validator: ExportPlaylistValidator,
+            },
+          },
     ]);
 
     server.ext('onPreResponse', (request, h) => {
