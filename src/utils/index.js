@@ -49,4 +49,10 @@ const mapDBToAlbumLike = (count) => ({
     likes: parseInt(count),
 });
 
-module.exports = {mapDBToModel, mapDBToAlbumSongService, mapDBToPlaylistSong, mapDBToPlalistActivity, mapDBToAlbumLike};
+const mapSongList = ({id, title, performer}) => ({
+    id: id,
+    title: title,
+    performer: performer,
+});
+
+module.exports = {mapDBToModel, mapDBToAlbumSongService, mapDBToPlaylistSong, mapDBToPlalistActivity, mapDBToAlbumLike, mapSongList};

@@ -57,7 +57,7 @@ const init = async () => {
     const cacheService = new CacheService();
     const albumService = new AlbumService(cacheService);
     const albumValidator = new AlbumValidator();
-    const songService = new SongService();
+    const songService = new SongService(cacheService);
     const songValidator = new SongValidator();
     const userService = new UserService();
     const userValidator = new UserValidator();
